@@ -1,14 +1,14 @@
-server:
-  port: 8081
 spring:
-  application:
-    name: SpringBoot3.2ApiTestes
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rest_with_spring_boot_lgs?useTimezone=true&serverTimezone=UTC
+    username: root
+    password: 1234567
   jpa:
+    hibernate:
+      ddl-auto: update
     properties:
-      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
-      show-sql: false
-spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
-url: jdbc:mysql://localhost:3306/rest_with_spring_boot_lgs?useTimezone=true&serverTimezone=UTC
-username: root
-password: 1234567
-jpa.hibernate: ddl.auto:update
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: false
+    server.port: 8081
