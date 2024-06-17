@@ -7,14 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lgs.data.vo.v1.PersonVO;
+import com.lgs.data.vo.v2.PersonVOV2;
 import com.lgs.exceptions.ResourceNotFoundException;
 import com.lgs.mapper.DozerMapper;
+import com.lgs.mapper.custom.PersonMapper;
 import com.lgs.model.Person;
 import com.lgs.repositories.PersonRepository;
 
 @Service
 public class PersonServices {
 
+	@Autowired
+	PersonMapper mapper;
+	
 	@Autowired
 	PersonRepository repository;
 
@@ -63,6 +68,13 @@ public class PersonServices {
 		var entity = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this Id!"));
 		repository.delete(entity);
+	}
+
+	public PersonVOV2 createV2(PersonVOV2 person) {
+		logger.info("Create one person with V2!");
+		var entity = mapper.convertVoToEntity(person);
+		var vo = mapper.convertEntityToVo(repository.save(entity));
+		return vo;
 	}
 
 }
